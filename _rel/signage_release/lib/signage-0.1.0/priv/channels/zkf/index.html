@@ -1,0 +1,268 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <style type="text/css">
+            html, body, .full-screen {
+                margin:0; 
+                padding:0; 
+                height: 100%;
+                width: 100%;
+                height: 100vh;
+                width: 100vw;
+                border: none;
+            }
+            .default{
+                background-image: url(images/bg.png);
+                background-repeat: no-repeat;
+                background-position: center center;  
+                background-color: red;
+            }
+            .transparent{
+                background-color:transparent;
+                background-image:none;
+            }
+            .hidden {
+                display:none;
+            }
+            #qrcode {
+                display:block;
+                margin:auto auto;
+                height:800px;
+                width:500px;        
+            }
+        </style>
+        <title>Sparkpad Menu-board</title>
+    </head>
+    <body>
+        <a id="qrcode" class="hidden"></a>
+        <div class='default full-screen' id='deft'></div>
+        <video class='full-screen transparent' autoplay id='video'></video>
+        <img class='full-screen transparent' id='image'></img>
+        <iframe class="full-screen transparent" id='html5'></iframe>
+        <div class='full-screen transparent' id='overlay'></div>
+
+
+        <script type="text/javascript" src="/js/jquery-2.1.4.js"></script>
+        <script type="text/javascript" src="/js/Math.uuid.js"></script>
+        <script type="text/javascript" src="playlists.js"></script>
+        <script type="text/javascript" src="/js/qrcodejs/qrcode.js"></script>
+        <script type="text/javascript">
+            var test_list0 = [
+                {
+                    "configuration":{
+                        "start_date":"2015-11-27",
+                        "tag":"current",
+                        "end_date":"2015-11-27",
+                        "start_time":"00:00",
+                        "end_time":"23:59"
+                    },
+                    "materials":[
+                        {
+                            "content_id":"3085",
+                            "playtime":"5",
+                            "type":"image",
+                            "filename":"e5b65c147bacbee9a5567490853d71a2_king1.jpg",
+                            "download":"http:\/\/115.29.210.136\/zkfecp\/sites\/default\/files\/material_image\/e5b65c147bacbee9a5567490853d71a2_king1.jpg",
+                            "dishes":[]
+                        }
+                        ,{
+                            "content_id":"3086",
+                            "playtime":"5",
+                            "type":"image",
+                            "filename":"69c9ea5c2b398d777866456595186b77_king2.jpg",
+                            "download":"http:\/\/115.29.210.136\/zkfecp\/sites\/default\/files\/material_image\/69c9ea5c2b398d777866456595186b77_king2.jpg",
+                            "dishes":[]
+                        }
+                        ,{
+                            "content_id":"3087",
+                            "playtime":"5",
+                            "type":"image",
+                            "filename":"8046e9b0d017285ae3f79f1a5c394f4c_king3.jpg",
+                            "download":"http:\/\/115.29.210.136\/zkfecp\/sites\/default\/files\/material_image\/8046e9b0d017285ae3f79f1a5c394f4c_king3.jpg",
+                            "dishes":[]
+                        }
+                        ,{
+                            "content_id":"3088",
+                            "playtime":"5",
+                            "type":"image",
+                            "filename":"4f44fe3773b3ae4673d15972d8e79a8f_king4.jpg",
+                            "download":"http:\/\/115.29.210.136\/zkfecp\/sites\/default\/files\/material_image\/4f44fe3773b3ae4673d15972d8e79a8f_king4.jpg",
+                            "dishes":[]
+                        }
+                        ,{
+                            "content_id":"3085",
+                            "playtime":"5",
+                            "type":"image",
+                            "filename":"e5b65c147bacbee9a5567490853d71a2_king1.jpg",
+                            "download":"http:\/\/115.29.210.136\/zkfecp\/sites\/default\/files\/material_image\/e5b65c147bacbee9a5567490853d71a2_king1.jpg",
+                            "dishes":[]
+                        }
+                      
+                    ]
+                }
+
+            ];
+            var test_list1 = [{
+                    configuration: {
+                        start_date: "2015-11-06",
+                        tag: "current",
+                        end_date: "2015-12-09",
+                        start_time: "00:00",
+                        end_time: "23:59"
+                    },
+                    materials: [{
+                        content_id: "3782",
+                        playtime: "10",
+                        type: "image",
+                        filename: "1.jpg",
+                        download: hostinfo().base + "/materials/1.jpg",
+                        dishes: [ ]
+                    },{
+                        content_id: "3759",
+                        playtime: "10",
+                        type: "image",
+                        filename: "2.jpg",
+                        download: hostinfo().base + "/materials/2.jpg",
+                        dishes: [ ]
+                    }]
+                }
+                ,{
+                    configuration: {
+                        start_date: "2015-11-06",
+                        tag: "current",
+                        end_date: "2015-12-09",
+                        start_time: "00:00",
+                        end_time: "23:59"
+                    }
+                    ,materials: [
+                    {
+                        content_id: "3782",
+                        type: "video",
+                        filename: "1.mp4",
+                        download: hostinfo().base + "/materials/1.mp4",
+                        dishes: [ ]
+                    }
+                    ,{
+                        content_id: "3759",
+                        type: "video",
+                        filename: "2.avi",
+                        download: hostinfo().base + "/materials/2.avi",
+                        dishes: [ ]
+                    }
+                    ]
+                }
+                ];
+            var test_list2 = [{
+                    configuration: {
+                        start_date: "2015-11-06",
+                        tag: "current",
+                        end_date: "2015-12-09",
+                        start_time: "00:00",
+                        end_time: "23:59"
+                    },
+                    materials: [{
+                        content_id: "3782",
+                        playtime: "10",
+                        type: "image",
+                        filename: "1.jpg",
+                        download: hostinfo().base + "/materials/1.jpg",
+                        dishes: [ ]
+                    },{
+                        content_id: "3759",
+                        playtime: "10",
+                        type: "image",
+                        filename: "2.jpg",
+                        download: hostinfo().base + "/materials/2.jpg",
+                        dishes: [ ]
+                    },{
+                        content_id: "3782",
+                        playtime: "10",
+                        type: "image",
+                        filename: "1.jpg",
+                        download: hostinfo().base + "/materials/3.jpg",
+                        dishes: [ ]
+                    }
+                    ]
+                }];
+        </script>
+        <script type="text/javascript">
+/*
+            function caretAtEnd(input){
+                input.focus();
+                if (input.get(0).setSelectionRange) {
+                    var len = input.val().length * 2;
+                    input.get(0).setSelectionRange(len, len);
+                }
+                input.get(0).scrollTop = 999999;
+            }
+            function cancelBubble(e) {
+                var evt = e ? e:window.event;
+                if (evt.stopPropagation)    
+                        evt.stopPropagation();
+                if (evt.cancelBubble!=null) 
+                        evt.cancelBubble = true;
+            }
+*/            
+            $(function(){
+                window.config = new Config('localConfig');
+                window.signage = new Signage();
+                window.config.setBaseURL("http://115.29.210.136/zkfecp"); 
+                function useDID(id){
+                    if(!window.qrlib) {
+                        var url = window.config.get().baseUrl + "/app/bind_store?kernel_version=LG&version=1&orientation=4&size=55&did=" + id;
+                        $('#qrcode').html('');
+                        $('#qrcode').attr('href', url);
+                        window.qrlib = new QRCode(document.getElementById("qrcode"), {
+                                    width : 500,
+                                    height : 500
+                                });
+                        window.qrlib.makeCode(url); 
+                        window.config.setDID(id);                                  
+                    }
+                }      
+                                        
+                window.ext = {
+                    start:function(id){
+                        if(id) {
+                            useDID(id);
+                            window.signage.start(config.playlistURL());
+                        }
+                        $("#qrcode").hide();
+                    },
+                    command:function(data){
+                        switch(data){
+                        case 'update':
+                            window.signage.forceUpdate();
+                            break;
+                        case 'test0':
+                            window.signage.start(test_list0);
+                            break;
+                        case 'test1':
+                            window.signage.start(test_list1);
+                            break;
+                        case 'test2':
+                            window.signage.start(test_list2);
+                            break;                            
+                        default:
+                            break;
+                        }
+                    },
+                    config:function(id){
+                        if(id){
+                            useDID(id);    
+                        }
+                        $("#qrcode").show();
+                        window.signage.stop();
+                   }
+                };
+                document.onkeydown = function(evt){
+                    if(top && top.onkeydown){
+                        top.onkeydown(evt);
+                    }
+                }
+            });
+        </script>
+    </body>
+</html>

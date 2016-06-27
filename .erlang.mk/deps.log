@@ -1,0 +1,6 @@
+/root/demo/signage/deps/cowboy
+/root/demo/signage/deps/cowlib
+/root/demo/signage/deps/ranch
+/root/demo/signage/deps/erlydtl
+/root/demo/signage/deps/eunit
+/root/demo/signage/deps/eunit_formatters

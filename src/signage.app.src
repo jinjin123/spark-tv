@@ -1,0 +1,19 @@
+{application, signage, [
+	{description, "Digital Signage System"},
+	{vsn, "0.1.0"},
+	{id, "git"},
+	{modules, []},
+	{registered, [signage_sup]},
+	{applications, [
+		kernel
+		,inets
+		,stdlib
+		,mnesia
+		,crypto
+		,cowboy
+		,ssl
+		,erlydtl
+	]},
+	{mod, {signage_app, []}},
+	{env, []}
+]}.

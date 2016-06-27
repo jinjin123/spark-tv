@@ -1,0 +1,51 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>SparkPAD</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type="text/css">
+      html, body, .full-screen {
+        position: fixed;
+        margin:0; 
+        padding:0; 
+        height: 100%;
+        width: 100%;
+        height: 100vh;
+        width: 100vw;
+        border: 0px;
+      }
+      .hidden {
+        display:none;
+      }
+    </style>
+  </head>
+
+  <body>
+
+        <div id="main-shell" role="tabpanel" class="tab-pane fade">
+        <fieldset>
+          <div class="form-group">
+            <label for="shell-command">Command</label>
+            <textarea class="form-control" name="shell-command" id="shell-command"></textarea>
+          </div>
+          <button class="btn" onclick="shell_exec()">Execute</button>
+          <hr>
+          <div class="form-group">
+            <label for="shell-console">Result</label>
+            <textarea class="form-control" name="shell-console" id="shell-console" readonly></textarea>
+          </div>                  
+        </fieldset>
+      </div>
+    <script type="text/javascript" src="/js/jquery-2.1.4.js"></script>
+    <script type="text/javascript" src="/js/Math.uuid.js"></script>
+    <script type="text/javascript" src="/js/wshell.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            window.wshell = new Wshell();
+            window.wshell.connect("{{id}}.shell"); 
+        });
+    </script>
+  </body>
+</html> 

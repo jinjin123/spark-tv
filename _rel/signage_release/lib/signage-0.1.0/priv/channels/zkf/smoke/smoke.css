@@ -1,0 +1,7 @@
+.smokeforlib {
+	position: absolute;
+	width: 250px;
+	height: 250px;
+	background:url('smoke-texture.png') no-repeat;
+	margin-left:0px
+}
