@@ -1,5 +1,0 @@
-{% autoescape off %}
-[{% for o in urls %}
-    {% if not forloop.first %},{% endif %}"{{o}}"
- {% endfor %}]
-{% endautoescape %}    

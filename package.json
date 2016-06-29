@@ -1,0 +1,13 @@
+{
+  "name": "LGSignage",
+  "version": "0.0.1",
+  "description": "multiple screen sync play",
+  "author" : "Yuki Cheung <ycheung@sparkpad.com>",
+  "dependencies": {
+    "bootstrap": "^3.3.6",
+    "express": "^4.13.4",
+    "jquery": "^2.2.3",
+    "underscore": "^1.8.3",
+    "ws": "^1.1.0"
+  }
+}

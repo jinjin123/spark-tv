@@ -1,9 +1,0 @@
-{
-    "serverIp":"192.168.0.109", 
-    "serverPort":8080, 
-    "secureConnection":false, 
-    "appLaunchMode":"remote",
-    "fqdnMode":true,
-    "fqdnAddr":"http://192.168.0.109:8080"
-}
-
