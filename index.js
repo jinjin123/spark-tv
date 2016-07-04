@@ -16,8 +16,8 @@ app.get('/clients',function(req, res, next){
     res.sendFile(__dirname + '/public/clients.html');
 });
 
-var sockets = {};
-var clients;
+var sockets = [];
+var clients = {};
 var servertime = function(){
     var startAt = 0;
     var lapTime = 0;
@@ -64,11 +64,11 @@ wss.on ('connection', function connection(ws) {
         data = JSON.parse(data);
         switch(data.type){
             case 'ready':
-                clients = data.message;
+                var total = data.message;
                 var num = data.num;
-                sockets[num] = id;
-                if(sockets.length == clients){
-                  wss.broadcast({uid:ws.uid,message:"blank",type:"play"});
+                clients[num] = id;
+                if(clients.length == total){
+                  wss.broadcast({uid:ws.uid,message:"blank",type:"start"});
                 }
                 break;
             default:
@@ -87,8 +87,9 @@ wss.on ('connection', function connection(ws) {
         }
         sockets.splice(i,1);
     });
-    //sockets.push(id);
+    sockets.push(id);
     console.log(sockets);
+    console.log(clients);
 });
 server.on('request', app);
 server.listen(port, function () { console.log('Listening on ' + server.address().port);});
