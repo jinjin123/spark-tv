@@ -11,6 +11,6 @@
     "ws": "^1.1.0"
   },
   "scripts": { 
-    "start" : "index.js" 
+    "start" : "node index.js" 
   }
 }
