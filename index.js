@@ -18,33 +18,6 @@ app.get('/clients',function(req, res, next){
 
 var sockets = [];
 var clients = {};
-var servertime = function(){
-    var startAt = 0;
-    var lapTime = 0;
-
-    var now = function(){
-        return (new Date()).getTime();
-    };
-
-    this.start = function(){
-        startAt = startAt ? startAt:now();
-    };
-
-    this.pause = function(){
-        lapTime = startAt ? lapTime + now() - startAt :lapTime;
-        startAt = 0;
-    };
-
-    this.stop = function(){
-        lapTime = startAt = 0;
-    };
-
-    this.time = function(){
-        return lapTime + (startAt ? now()- startAt :0);
-    };
-
-};
-var x = new servertime();
 wss.broadcast = function (data) {
     for (var i in this.clients) {
         this.clients [i].send (JSON.stringify(data));
@@ -57,20 +30,27 @@ wss.on ('connection', function connection(ws) {
     console.log("用戶" + id + "已連結。");
 
     ws.on ('message', function (data) {
-        // var now = new Date();
-        // console.log (now.toLocaleString() + ' ' +message);
-        // wss.broadcast (message);
-
         data = JSON.parse(data);
+        n = 0;
         switch(data.type){
             case 'ready':
                 var total = data.message;
                 var num = data.num;
                 clients[num] = id;
-                if(clients.length == total){
+                if(sockets.length == total){
                   wss.broadcast({uid:ws.uid,message:"blank",type:"start"});
                 }
                 break;
+            case 'end':
+                n ++;
+                if(n == total && sockets.length == total){
+                  wss.broadcast({uid:ws.uid,message:"blank",type:"rewind"});
+                  n = 0;
+                }else if(sockets.length != total){
+                  wss.broadcast({uid:ws.uid,message:"blank",type:"next"});
+                  n = 0;
+                }
+              break;
             default:
               console.log(data.message);
               break;
