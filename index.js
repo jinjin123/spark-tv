@@ -9,12 +9,12 @@ var port = 8888;
 app.use(express.static(__dirname + '/node_modules/bootstrap/dist'));
 app.use(express.static(__dirname + '/node_modules/jquery/dist'));
 
-app.get('/', function(req, res, next){
-    res.sendFile(__dirname + '/public/control.html');
-});
-app.get('/clients',function(req, res, next){
-    res.sendFile(__dirname + '/public/clients.html');
-});
+//app.get('/', function(req, res, next){
+//    res.sendFile(__dirname + '/public/control.html');
+//});
+//app.get('/clients',function(req, res, next){
+//    res.sendFile(__dirname + '/public/clients.html');
+//});
 
 var sockets = {};
 var clients;
