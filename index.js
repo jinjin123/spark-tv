@@ -6,16 +6,6 @@ var express = require('express');
 var app = express();
 var port = 8888;
 
-app.use(express.static(__dirname + '/node_modules/bootstrap/dist'));
-app.use(express.static(__dirname + '/node_modules/jquery/dist'));
-
-//app.get('/', function(req, res, next){
-//    res.sendFile(__dirname + '/public/control.html');
-//});
-//app.get('/clients',function(req, res, next){
-//    res.sendFile(__dirname + '/public/clients.html');
-//});
-
 var sockets = [];
 var clients = {};
 wss.broadcast = function (data) {
@@ -31,14 +21,17 @@ wss.on ('connection', function connection(ws) {
 
     ws.on ('message', function (data) {
         data = JSON.parse(data);
+        console.log(data);
         n = 0;
         switch(data.type){
             case 'ready':
                 var total = data.message;
                 var num = data.num;
                 clients[num] = id;
+                console.log(clients);
                 if(sockets.length == total){
                   wss.broadcast({uid:ws.uid,message:"blank",type:"start"});
+                  console.log("所有屏幕已連結，开始播放...");
                 }
                 break;
             case 'end':
@@ -46,7 +39,7 @@ wss.on ('connection', function connection(ws) {
                 if(n == total && sockets.length == total){
                   wss.broadcast({uid:ws.uid,message:"blank",type:"rewind"});
                   n = 0;
-                }else if(sockets.length != total){
+                }else if(n == sockets.length && sockets.length != total){
                   wss.broadcast({uid:ws.uid,message:"blank",type:"next"});
                   n = 0;
                 }
@@ -66,10 +59,11 @@ wss.on ('connection', function connection(ws) {
             }
         }
         sockets.splice(i,1);
+        console.log(sockets);
+        console.log(clients);
     });
     sockets.push(id);
     console.log(sockets);
-    console.log(clients);
 });
 server.on('request', app);
 server.listen(port, function () { console.log('Listening on ' + server.address().port);});
