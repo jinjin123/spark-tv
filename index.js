@@ -8,6 +8,8 @@ var port = 8888;
 
 var sockets = [];
 var clients = {};
+var n = 0;
+var total;
 wss.broadcast = function (data) {
     for (var i in this.clients) {
         this.clients [i].send (JSON.stringify(data));
@@ -19,13 +21,12 @@ wss.on ('connection', function connection(ws) {
     ws.uid = ws.upgradeReq.headers['sec-websocket-key'];
     console.log("用戶" + id + "已連結。");
 
-    n = 0;
     ws.on ('message', function (data) {
         data = JSON.parse(data);
         console.log(data);
         switch(data.type){
             case 'ready':
-                var total = data.message;
+                total = data.message;
                 var num = data.num;
                 clients[num] = id;
                 console.log(clients);
@@ -36,8 +37,9 @@ wss.on ('connection', function connection(ws) {
                 break;
             case 'end':
                 n ++;
-                console.log(n);
                 console.log("length");
+                console.log("N = " + n);
+                console.log("total="+total);
                 console.log(sockets.length);
                 if(n == total && sockets.length == total){
                   wss.broadcast({uid:ws.uid,message:"blank",type:"rewind"});
