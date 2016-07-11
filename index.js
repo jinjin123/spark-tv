@@ -20,12 +20,11 @@ wss.on ('connection', function connection(ws) {
     var id = ws.upgradeReq.headers['sec-websocket-key'];
     ws.uid = ws.upgradeReq.headers['sec-websocket-key'];
     console.log("用戶" + id + "已連結。");
-    //Set counter to init before message is received
-    n=0;
 
     ws.on ('message', function (data) {
         data = JSON.parse(data);
         console.log(data);
+        n = 0;
         switch(data.type){
             case 'ready':
                 total = data.message;
