@@ -24,6 +24,7 @@ wss.on ('connection', function connection(ws) {
     ws.on ('message', function (data) {
         data = JSON.parse(data);
         console.log(data);
+        n = 0;
         switch(data.type){
             case 'ready':
                 total = data.message;
@@ -71,8 +72,10 @@ wss.on ('connection', function connection(ws) {
         console.log(sockets);
         console.log(clients);
     });
-    sockets.push(id);
-    console.log(sockets);
+    if (sockets.length < 8) {
+      sockets.push(id);
+      console.log(sockets);
+    }
 });
 server.on('request', app);
 server.listen(port, function () { console.log('Listening on ' + server.address().port);});
