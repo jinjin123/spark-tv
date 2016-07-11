@@ -44,8 +44,11 @@ wss.on ('connection', function connection(ws) {
                 console.log("total="+total);
                 console.log(sockets.length);
                 if(n == total && sockets.length == total){
+                  setTimeout(function(){ 
                   wss.broadcast({uid:ws.uid,message:"blank",type:"rewind"});
-                  console.log("rewind");
+                  }, 3000);
+                  var d = new Date(); 
+                  console.log("rewind" + d.toString());
                   n = 0;
                 }else if(n == sockets.length && sockets.length != total){
                   wss.broadcast({uid:ws.uid,message:"blank",type:"next"});
