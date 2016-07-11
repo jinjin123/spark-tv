@@ -30,6 +30,8 @@ wss.on ('connection', function connection(ws) {
                 var num = data.num;
                 clients[num] = id;
                 console.log(clients);
+                console.log("Socket.length = " + sockets.length);
+                console.log("Total = " + total);
                 if(sockets.length == total){
                   wss.broadcast({uid:ws.uid,message:"blank",type:"start"});
                   console.log("所有屏幕已連結，开始播放...");
