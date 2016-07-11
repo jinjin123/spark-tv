@@ -36,6 +36,8 @@ wss.on ('connection', function connection(ws) {
                 break;
             case 'end':
                 n ++;
+                console.log("N = " + n);
+                console.log(sockets.length);
                 if(n == total && sockets.length == total){
                   wss.broadcast({uid:ws.uid,message:"blank",type:"rewind"});
                   console.log("rewind");
