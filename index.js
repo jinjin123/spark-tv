@@ -48,10 +48,12 @@ wss.on ('connection', function connection(ws) {
                 n ++;
                 if(n == total && sockets.length == total){
                   wss.broadcast({uid:ws.uid,message:"blank",type:"rewind"});
+                  console.log("rewind");
                   n = 0;
                 }else if(n == sockets.length && sockets.length != total){
                   wss.broadcast({uid:ws.uid,message:"blank",type:"next"});
                   n = 0;
+                  console.log("next");
                 }
               break;
             default:
