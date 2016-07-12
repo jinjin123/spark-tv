@@ -56,6 +56,14 @@ wss.on ('connection', function connection(ws) {
                   console.log("next");
                 }
               break;
+            case 'force_rewind':
+                  setTimeout(function(){ 
+                  wss.broadcast({uid:ws.uid,message:"blank",type:"rewind"});
+                  }, 3000);
+                  var d = new Date(); 
+                  console.log("rewind" + d.toString());
+                  n=0;
+              break;
             default:
               console.log(data.message);
               break;

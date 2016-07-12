@@ -17,8 +17,21 @@ var server = http.createServer(function (request, response) {
        response.writeHead(302, {
          'Location': 'index.html'
        });
-       response.end();
-    }
+       setTimeout(function(){
+         response.end();
+       }, 300);
+    } else if ( pathname == "/rewind" ) {
+       var serverip = "172.17.12.111:8888"
+       ws = new WebSocket('ws://'+serverip);
+       ws.send(JSON.stringify({message:"",type:"end"})); 
+       ws.close();
+       response.writeHead(302, {
+         'Location': 'index.html'
+       });
+       setTimeout(function(){
+         response.end();
+       }, 300);
+    } else {
 
     if (pathname.charAt(pathname.length - 1) == "/") {
             //如果访问目录
@@ -53,6 +66,7 @@ var server = http.createServer(function (request, response) {
             });
         }
     });
+  }//end reboot else
 });
 server.listen(PORT);
 console.log("Server runing at port: " + PORT + ".");
