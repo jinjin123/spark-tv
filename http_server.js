@@ -5,6 +5,7 @@ var url=require('url');
 var fs=require('fs');
 var mime=require('./mime.js').types;
 var path=require('path');
+var WebSocket = require('ws');
 
 var server = http.createServer(function (request, response) {
     var pathname = url.parse(request.url).pathname;
