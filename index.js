@@ -28,6 +28,16 @@ wss.on ('connection', function connection(ws) {
             case 'ready':
                 total = data.message;
                 var num = data.num;
+
+                // Override num if it is remote
+                if ( data.num == "get_from_my_ip" ) {
+                  // Get last word of remote IP as no. of screen
+                  var remote_ipaddr = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
+                  var ip_string = remote_ipaddr.toString();
+                  num = ip_string.substr(ip_string.length - 1);
+                  console.log("ip = " +  remote_ipaddr);
+                  console.log("no = " +  num);
+                }
                 clients[num] = id;
                 console.log(clients);
                 console.log("Socket.length = " + sockets.length);
