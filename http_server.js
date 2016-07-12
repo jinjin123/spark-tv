@@ -15,7 +15,7 @@ var server = http.createServer(function (request, response) {
        require('shelljs/global');
        touch('./index.js'); //Trigger supervisor node to restart nodejs
        response.writeHead(302, {
-         'Location': 'index.html?reboot=success'
+         'Location': 'index.html'
        });
        response.end();
     }
