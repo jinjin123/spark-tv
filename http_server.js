@@ -23,7 +23,7 @@ var server = http.createServer(function (request, response) {
     } else if ( pathname == "/rewind" ) {
        var serverip = "172.17.12.111:8888"
        ws = new WebSocket('ws://'+serverip);
-       ws.send(JSON.stringify({message:"",type:"end"})); 
+       ws.send(JSON.stringify({message:"",type:"force_rewind"})); 
        ws.close();
        response.writeHead(302, {
          'Location': 'index.html'
