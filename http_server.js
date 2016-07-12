@@ -22,16 +22,18 @@ var server = http.createServer(function (request, response) {
          response.end();
        }, 300);
     } else if ( pathname == "/rewind" ) {
-       var serverip = "192.168.1.124:8888"
-       ws = new WebSocket('ws://'+serverip);
-       ws.send(JSON.stringify({message:"",type:"force_rewind"})); 
+       var serverip = "192.168.1.124:8888";
+
+       try{
+           var ws = new WebSocket('ws://'+serverip);
+       } catch(ex) {
+           console.error(ex);
+           return;
+       }
+
+       ws.onopen = WSonOpen;
        ws.close();
-       response.writeHead(302, {
-         'Location': 'index.html'
-       });
-       setTimeout(function(){
-         response.end();
-       }, 300);
+
     } else {
 
     if (pathname.charAt(pathname.length - 1) == "/") {
@@ -69,5 +71,14 @@ var server = http.createServer(function (request, response) {
     });
   }//end reboot else
 });
+
+
+function WSonOpen(e){
+       console.log('WebSocket start ...');
+       setTimeout(function(){
+         ws.send(JSON.stringify({message:"",type:"force_rewind"})); 
+       }, 100);
+}
+
 server.listen(PORT);
 console.log("Server runing at port: " + PORT + ".");
