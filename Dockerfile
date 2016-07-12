@@ -10,3 +10,4 @@ CMD node index.js >> /dev/stdout
 CMD setcap CAP_SYS_BOOT=+ep /usr/local/bin/node
 # replace this with your application's default port
 EXPOSE 8888
+EXPOSE 9080
