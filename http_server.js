@@ -17,7 +17,9 @@ var server = http.createServer(function (request, response) {
        response.writeHead(302, {
          'Location': '/index.html'
        });
-       //response.end();
+       setTimeout(function(){
+         response.end();
+       }, 300);
     }
 
     if (pathname.charAt(pathname.length - 1) == "/") {
