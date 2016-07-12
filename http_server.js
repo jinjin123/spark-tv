@@ -15,6 +15,9 @@ var server = http.createServer(function (request, response) {
        require('shelljs/global');
        touch('./index.js');
        response.write("success<br/>");
+       response.writeHead(302, {
+         'Location': 'index.html'
+       });
        //response.end();
     }
 
