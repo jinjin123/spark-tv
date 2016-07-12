@@ -13,12 +13,11 @@ var server = http.createServer(function (request, response) {
     //Implement reboot logic
     if ( pathname == "/reboot" ) {
        require('shelljs/global');
-       touch('./index.js');
-       response.write("success<br/>");
+       touch('./index.js'); //Trigger supervisor nodejs to restart nodejs
        response.writeHead(302, {
-         'Location': 'index.html'
+         'Location': '/index.html?reboot=success'
        });
-       //response.end();
+       response.end();
     }
 
     if (pathname.charAt(pathname.length - 1) == "/") {
