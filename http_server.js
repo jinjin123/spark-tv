@@ -3,7 +3,6 @@ var PORT = 9080;
 var http = require('http');
 var url=require('url');
 var fs=require('fs');
-//var mime = require('mime-types')
 var mime=require('./mime.js').types;
 var path=require('path');
 
@@ -13,7 +12,10 @@ var server = http.createServer(function (request, response) {
     console.log(pathname);
     //Implement reboot logic
     if ( pathname == "/reboot" ) {
-       require('reboot').rebootImmediately();
+       require('shelljs/global');
+       touch('./index.js');
+       response.write("success<br/>");
+       //response.end();
     }
 
     if (pathname.charAt(pathname.length - 1) == "/") {
