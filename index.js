@@ -50,7 +50,7 @@ wss.on ('connection', function connection(ws) {
                 //Check unique
                 // http://jszen.com/best-way-to-get-unique-values-of-an-array-in-javascript.7.html
                 var r=[];
-	        for(var i = 0; i < this.length; i++) 
+	        for(var i = 0; i < tv_map.length; i++) 
 	        {
 		    if (!tv_map[this[i]]) 
 		    {
@@ -58,7 +58,6 @@ wss.on ('connection', function connection(ws) {
 			r.push(this[i]); 
 		    } 
 	        }
-
                 console.log(tv_map);
                 console.log("N = " + n);
                 console.log("total="+total);
@@ -70,6 +69,7 @@ wss.on ('connection', function connection(ws) {
                   var d = new Date(); 
                   console.log("rewind" + d.toString());
                   n = 0;
+                  tv_map = [];
                 }else if(n == sockets.length && sockets.length != total){
                   wss.broadcast({uid:ws.uid,message:"blank",type:"next"});
                   n = 0;
