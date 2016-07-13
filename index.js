@@ -10,6 +10,7 @@ var sockets = [];
 var clients = {};
 var n = 0;
 var total;
+var tv_map = [];
 wss.broadcast = function (data) {
     for (var i in this.clients) {
         this.clients [i].send (JSON.stringify(data));
@@ -38,14 +39,33 @@ wss.on ('connection', function connection(ws) {
                 }
                 break;
             case 'end':
-                n ++;
-                console.log("length");
+                var remote_ipaddr = ws.upgradeReq.headers['x-forwarded-for'] || ws.upgradeReq.connection.remoteAddress;
+                var ip_string = remote_ipaddr.toString();
+                //num = ip_string.substr(ip_string.length - 1);
+                console.log("ip = " +  remote_ipaddr);
+                
+                //While n always in 1-8, mapping n with array and get unique values of the array prevent TV duplicate request
+                tv_map[n++] = ip_string;
+
+                //Check unique
+                // http://jszen.com/best-way-to-get-unique-values-of-an-array-in-javascript.7.html
+                var r=[];
+	        for(var i = 0; i < this.length; i++) 
+	        {
+		    if (!tv_map[this[i]]) 
+		    {
+			tv_map[this[i]] = true; 
+			r.push(this[i]); 
+		    } 
+	        }
+
+                console.log(tv_map);
                 console.log("N = " + n);
                 console.log("total="+total);
                 console.log(sockets.length);
-                if(n == total && sockets.length == total){
+                if( r.length == total && sockets.length == total){
                   setTimeout(function(){ 
-                  wss.broadcast({uid:ws.uid,message:"blank",type:"rewind"});
+                    wss.broadcast({uid:ws.uid,message:"blank",type:"rewind"});
                   }, 3000);
                   var d = new Date(); 
                   console.log("rewind" + d.toString());
