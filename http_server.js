@@ -1,11 +1,11 @@
-var PORT = 80;
+var PORT = 9080;
 
 var http = require('http');
 var url=require('url');
 var fs=require('fs');
-//var mime = require('mime-types')
 var mime=require('./mime.js').types;
 var path=require('path');
+var WebSocket = require('ws');
 
 var server = http.createServer(function (request, response) {
     var pathname = url.parse(request.url).pathname;
@@ -13,8 +13,28 @@ var server = http.createServer(function (request, response) {
     console.log(pathname);
     //Implement reboot logic
     if ( pathname == "/reboot" ) {
-       require('reboot').rebootImmediately();
-    }
+       require('shelljs/global');
+       touch('./index.js'); //Trigger supervisor node to restart nodejs
+       response.writeHead(302, {
+         'Location': 'index.html'
+       });
+       setTimeout(function(){
+         response.end();
+       }, 300);
+    } else if ( pathname == "/rewind" ) {
+       var serverip = "192.168.1.124:8888";
+
+       try{
+           var ws = new WebSocket('ws://'+serverip);
+       } catch(ex) {
+           console.error(ex);
+           return;
+       }
+
+       ws.onopen = WSonOpen;
+       ws.close();
+
+    } else {
 
     if (pathname.charAt(pathname.length - 1) == "/") {
             //如果访问目录
@@ -49,6 +69,16 @@ var server = http.createServer(function (request, response) {
             });
         }
     });
+  }//end reboot else
 });
+
+
+function WSonOpen(e){
+       console.log('WebSocket start ...');
+       setTimeout(function(){
+         ws.send(JSON.stringify({message:"",type:"force_rewind"})); 
+       }, 100);
+}
+
 server.listen(PORT);
 console.log("Server runing at port: " + PORT + ".");
